@@ -2,6 +2,7 @@ NOTES.md
 *.png
 *.gif
 didder
+didder-*
 !david_dithered.png
 
 

@@ -34,7 +34,9 @@ Colors (for --palette and --recolor) are entered as a single quoted argument.
 They can be separated by spaces and commas. Colors can be formatted as hex
 codes (case-insensitive, with or without the '#'), a single number from 0-255
 for grayscale, or a color name from the SVG 1.1 spec (aka the HTML or W3C
-color names).
+color names). All colors are interpreted in the sRGB colorspace.
+
+Color names: https://www.w3.org/TR/SVG11/types.html#ColorKeywords
 
 Images are converted to grayscale automatically if the palette is grayscale.
 This produces more correct results.
