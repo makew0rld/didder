@@ -105,13 +105,13 @@ pattern matching: https://golang.org/pkg/path/filepath/#Match`
 			&cli.StringFlag{
 				Name:     "out",
 				Aliases:  []string{"o"},
-				Usage:    "set output file path or directory",
+				Usage:    "set output file or directory, '-' for stdout",
 				Required: true,
 			},
 			&cli.StringSliceFlag{
 				Name:     "in",
 				Aliases:  []string{"i"},
-				Usage:    "set input file path, specify multiple times for multiple inputs",
+				Usage:    "set input file; can be used multiple times; '-' for stdin",
 				Required: true,
 			},
 			&cli.BoolFlag{
