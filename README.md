@@ -10,6 +10,8 @@
 didder is an extensive, fast, and accurate command-line image dithering tool. It is designed to work well for both power users as well as pipeline scripting.
 It is backed by my [dithering library](https://github.com/makeworld-the-better-one/dither), and is unique in its correctness and variety of dithering algorithms. No online or offline tool I know of provides as many options, while being correct (linearizing the image).
 
+It does not support images that make use of the alpha channel (transparency), but it will in the future.
+
 ## Types of dithering supported
 
 - Random noise (in grayscale and RGB)
