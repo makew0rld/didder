@@ -298,7 +298,7 @@ func random(c *cli.Context) error {
 	}
 
 	if len(floatArgs) == 2 {
-		if grayscale || saturation <= -100 {
+		if grayscale {
 			ditherer.Mapper = dither.RandomNoiseGrayscale(floatArgs[0], floatArgs[1])
 		} else {
 			// Use the two arguments for all channels
