@@ -323,7 +323,7 @@ func bayer(c *cli.Context) error {
 	args := parseArgs(c.Args().Slice(), " ,x")
 
 	if len(args) != 2 {
-		return errors.New("bayer needs 2 arguments exactly")
+		return errors.New("bayer needs 2 arguments exactly. Example: 4x4")
 	}
 
 	uintArgs := make([]uint, 2)
