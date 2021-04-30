@@ -17,6 +17,7 @@ SED     := sed
 PANDOC  := pandoc
 GZIP    := gzip
 MANDB   := mandb
+CP      := cp
 
 didder: go.mod go.sum $(SRC)
 	GO111MODULE=on CGO_ENABLED=0 $(GO) build -o $@ -ldflags="-s -w -X main.version=$(VERSION) -X main.commit=$(COMMIT) -X main.builtBy=$(BUILDER)"
@@ -30,10 +31,11 @@ man:
 	$(PANDOC) didder.1.md -s -t man -o didder.1
 	$(SED) -i 's/VERSION/$(VERSION)/g' didder.1
 	$(SED) -i 's/DATE/$(DATE)/g' didder.1
-	$(PANDOC) -f man didder.1 -o MANPAGE.md
+	$(CP) didder.1.md MANPAGE.md
 	$(SED) -i '1s/^/<!-- DO NOT EDIT, AUTOMATICALLY GENERATED, EDIT dither.1.md INSTEAD -->\n/' MANPAGE.md
 	$(SED) -i 's/:   //g' MANPAGE.md
 	$(SED) -i 's/    //g' MANPAGE.md
+	$(SED) -i 's/^\[/    \[/g' MANPAGE.md
 
 .PHONY: install
 install: didder
