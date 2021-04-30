@@ -128,6 +128,14 @@ If you want to see examples of the different dithering algorithms, you can look 
 
 See [here](https://github.com/makeworld-the-better-one/dither#scaling-images) for more information on these points.
 
+## Strength
+
+The `--strength` flag applies to every command except `random`. By default it is set to 100%, meaning that the dithering is applied at full strength.
+
+Reducing the strength is often visibly similar to reducing contrast. With `edm`, this can be used to reduce noise, when set to a value around 80%.
+
+For `bayer` grayscale palette images, usually 100% is fine, but for 4x4 matrices or smaller, you may need to reduce the strength. For `bayer` (and by extension `odm`) color palette images, several sites recommend 64% strength (written as 256/4). This is often a good default for `bayer`/`odm` dithering color images, as 100% will distort colors too much.
+
 ## When to use `--recolor`
 
 The `--recolor` flag exists because when palettes that are severely limited in terms of RGB spread are used, accurately representing the image colors with the desired palette is impossible. Instead of accuracy of color, the new goal is accuracy of luminance, or even just accuracy of contrast. For example, the original Nintendo Game Boy used a solely [green palette](https://en.wikipedia.org/wiki/List_of_video_game_console_palettes#Game_Boy). By setting `--palette` to shades of gray and then `--recolor`ing to the desired shades of green, input images will be converted to grayscale automatically and then dithered in one dimension (gray), rather than trying to dither a color image (three dimensions, RGB) into a one dimensional green palette. This is similar to "hue shifting" or "colorizing" an image in image editing software.
