@@ -34,7 +34,7 @@ It does not support images that make use of the alpha channel (transparency), bu
 More methods of dithering are being worked on, such as Riemersma, Yuliluoma, and blue noise. If you'd like to help out with development of those methods, or request a new one, please make an issue in my [dither](https://github.com/makeworld-the-better-one/dither) library repo, not this one.
 
 ## Features
-- Set palette using hex codes, number 0-255 (grayscale), or [SVG color names](https://www.w3.org/TR/SVG11/types.html#ColorKeywords)
+- Set palette using RGB tuples, hex codes, number 0-255 (grayscale), or [SVG color names](https://www.w3.org/TR/SVG11/types.html#ColorKeywords)
   - All colors are interpreted in the sRGB colorspace
 - Optionally recolor image with a different palette after dithering
 - Set dithering strength

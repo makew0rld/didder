@@ -31,8 +31,8 @@ func main() {
 
 		description = `
 Colors (for --palette and --recolor) are entered as a single quoted argument.
-They can be separated by spaces and commas. Colors can be formatted as hex
-codes (case-insensitive, with or without the '#'), a single number from 0-255
+They can be separated by spaces and commas. Colors can be formatted as RGB tuples,
+hex codes (case-insensitive, with or without the '#'), a single number from 0-255
 for grayscale, or a color name from the SVG 1.1 spec (aka the HTML or W3C
 color names). All colors are interpreted in the sRGB colorspace.
 

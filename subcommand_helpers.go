@@ -66,7 +66,7 @@ func globalFlag(flag string, c *cli.Context) interface{} {
 func globalIsSet(flag string, c *cli.Context) bool {
 	ancestor := c.Lineage()[len(c.Lineage())-1]
 	if len(ancestor.Args().Slice()) == 0 {
-		// See globalFlag
+		// See globalFlag for why this if statement exists
 		return c.Lineage()[len(c.Lineage())-2].IsSet(flag)
 	}
 	return ancestor.IsSet(flag)
@@ -88,8 +88,11 @@ func parseArgs(args []string, splitRunes string) []string {
 	return finalArgs
 }
 
-func hex2Color(hex string) (color.RGBA, error) {
+func hexToColor(hex string) (color.RGBA, error) {
 	// Modified from https://github.com/lucasb-eyer/go-colorful/blob/v1.2.0/colors.go#L333
+
+	hex = strings.TrimPrefix(hex, "#")
+
 	format := "%02x%02x%02x"
 	var r, g, b uint8
 	n, err := fmt.Sscanf(strings.ToLower(hex), format, &r, &g, &b)
@@ -97,7 +100,20 @@ func hex2Color(hex string) (color.RGBA, error) {
 		return color.RGBA{}, err
 	}
 	if n != 3 {
-		return color.RGBA{}, fmt.Errorf("%v is not a hex color", hex)
+		return color.RGBA{}, fmt.Errorf("%s is not a hex color", hex)
+	}
+	return color.RGBA{r, g, b, 255}, nil
+}
+
+func rgbToColor(s string) (color.RGBA, error) {
+	format := "%d,%d,%d"
+	var r, g, b uint8
+	n, err := fmt.Sscanf(s, format, &r, &g, &b)
+	if err != nil {
+		return color.RGBA{}, err
+	}
+	if n != 3 {
+		return color.RGBA{}, fmt.Errorf("%s is not an RGB tuple", s)
 	}
 	return color.RGBA{r, g, b, 255}, nil
 }
@@ -105,13 +121,22 @@ func hex2Color(hex string) (color.RGBA, error) {
 // parseColors takes args and turns them into a color slice. All returned
 // colors are guaranteed to only be color.RGBA.
 func parseColors(flag string, c *cli.Context) ([]color.Color, error) {
-	args := parseArgs([]string{globalFlag(flag, c).(string)}, " ,#")
+	args := parseArgs([]string{globalFlag(flag, c).(string)}, " ")
 	colors := make([]color.Color, len(args))
 
 	for i, arg := range args {
-		// Try to parse as hex, then grayscale, then HTML colors, then fail
+		// Try to parse as RGB numbers, then hex, then grayscale, then SVG colors, then fail
 
-		hexColor, err := hex2Color(arg)
+		if strings.Count(arg, ",") == 2 {
+			rgbColor, err := rgbToColor(arg)
+			if err != nil {
+				return nil, fmt.Errorf("%s: %s is not a valid RGB tuple. Example: 25,200,150", flag, arg)
+			}
+			colors[i] = rgbColor
+			continue
+		}
+
+		hexColor, err := hexToColor(arg)
 		if err == nil {
 			colors[i] = hexColor
 			continue
@@ -132,7 +157,7 @@ func parseColors(flag string, c *cli.Context) ([]color.Color, error) {
 			continue
 		}
 
-		return nil, fmt.Errorf("%s: %s not recognized as a hex code, number 0-255, or HTML color name", flag, arg)
+		return nil, fmt.Errorf("%s: %s not recognized as an RGB tuple, hex code, number 0-255, or SVG color name", flag, arg)
 	}
 
 	return colors, nil
