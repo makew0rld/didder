@@ -82,8 +82,9 @@ sudo make install # If you want to install the binary for all users
 didder [global options] command [command options] [arguments...]
 ```
 
-Run `didder` to see some info, and the global options and commands. Run `didder help cmd` or `didder cmd --help` to see information and opions for a specific command.
-Each command represents a different dithering algorithm, or set of algorithms.
+The best place to learn about how to use didder is the manual. Run `man didder`, or look at the [MANPAGE.md](./MANPAGE.md) file. If you only read about one flag, read about `--strength`. It's especially important for `bayer` dithering of color images.
+
+You can also run `didder` to see the global options and commands. Each command represents a different dithering algorithm, or set of algorithms. You can see the options for each command with `didder help cmd` or `didder cmd --help`.
 
 Here's a fully working command as an example:
 ```shell
@@ -118,39 +119,6 @@ The main reason for using any other dithering algorithm would be
 - **Speed** - error diffusion dithering is sequential and therefore single-threaded. But ordered dithering, like using `Bayer`, will use all available CPUs, which is much faster.
 
 If you want to see examples of the different dithering algorithms, you can look at [this directory](https://github.com/makeworld-the-better-one/dither/tree/master/images/output). Or try them out yourself!
-
-## Avoid these mistakes
-
-- It's easy to mess up a dithered image by scaling it manually. It's best to scale the image to the size you want before dithering (externally, or with `--width` and/or `--height`), and then leave it
-- If you need to scale it up afterward, use `--upscale`, rather than another tool. This will prevent image artifacts or blurring.
-- Be wary of environments where you can't make sure an image will be displayed at 100% size, pixel for pixel. Make sure nearest-neighbor scaling is being used at least.
-- Dithered images must only be encoded in a lossless image format. This is why the tool only outputs PNG or GIF.
-
-See [here](https://github.com/makeworld-the-better-one/dither#scaling-images) for more information on these points.
-
-## Strength
-
-The `--strength` flag applies to every command except `random`. By default it is set to 100%, meaning that the dithering is applied at full strength.
-
-Reducing the strength is often visibly similar to reducing contrast. With `edm`, this can be used to reduce noise, when set to a value around 80%.
-
-For `bayer` grayscale palette images, usually 100% is fine, but for 4x4 matrices or smaller, you may need to reduce the strength. For `bayer` (and by extension `odm`) color palette images, several sites recommend 64% strength (written as 256/4). This is often a good default for `bayer`/`odm` dithering color images, as 100% will distort colors too much.
-
-## When to use `--recolor`
-
-The `--recolor` flag exists because when palettes that are severely limited in terms of RGB spread are used, accurately representing the image colors with the desired palette is impossible. Instead of accuracy of color, the new goal is accuracy of luminance, or even just accuracy of contrast. For example, the original Nintendo Game Boy used a solely [green palette](https://en.wikipedia.org/wiki/List_of_video_game_console_palettes#Game_Boy). By setting `--palette` to shades of gray and then `--recolor`ing to the desired shades of green, input images will be converted to grayscale automatically and then dithered in one dimension (gray), rather than trying to dither a color image (three dimensions, RGB) into a one dimensional green palette. This is similar to "hue shifting" or "colorizing" an image in image editing software.
-
-For these situations, `--recolor` should usually be a palette made up of one hue, and `--palette` should be the grayscale version of that palette. The `--palette` could also be just equally spread grayscale values, which would increase the contrast but make the luminance inaccurate.
-
-Recoloring can also be useful for increasing contrast on a strange palette, like: `--palette 'black white' --recolor 'indigo LimeGreen'`. Setting just `--palette 'indigo LimeGreen'` would give bad (low contrast) results because that palette is not that far apart in RGB space. These "bad results" are much more pronounced when the input image is in color, because three dimensions are being reduced.
-
-Another usage of `--recolor` would be to invert the image colors, by providing `--palette` in reverse. But this is the same as providing the inverted image beforehand.
-
-If you have found other uses for `--recolor`, let me know!
-
-## Other info
-
-To increase the dithering artifacts for aesthetic effect, you can downscale the image before dithering and upscale after. Like if the image is 1000 pixels tall, your command can look like `didder --height 500 --upscale 2 [...]`. Depending on the input image size and what final size you want, you can of course just upscale as well.
 
 
 ## License
