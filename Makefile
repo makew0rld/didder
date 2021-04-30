@@ -33,7 +33,7 @@ man:
 	$(SED) -i 's/DATE/$(DATE)/g' didder.1
 	$(CP) didder.1.md MANPAGE.md
 	$(SED) -i '1s/^/<!-- DO NOT EDIT, AUTOMATICALLY GENERATED, EDIT dither.1.md INSTEAD -->\n/' MANPAGE.md
-	$(SED) -i 's/:   //g' MANPAGE.md
+	$(SED) -i 's/:   /\n/g' MANPAGE.md
 	$(SED) -i 's/    //g' MANPAGE.md
 	$(SED) -i 's/^\[/    \[/g' MANPAGE.md
 
