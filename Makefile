@@ -36,6 +36,7 @@ man:
 	$(SED) -i 's/:   /\n/g' MANPAGE.md
 	$(SED) -i 's/    //g' MANPAGE.md
 	$(SED) -i 's/^\[/    \[/g' MANPAGE.md
+	$(SED) -i 's/\\$$//g' MANPAGE.md
 
 .PHONY: install
 install: didder

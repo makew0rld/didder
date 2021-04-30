@@ -148,26 +148,26 @@ Requires two arguments, for the X and Y dimension of the matrix. They can be sep
 
 Select or provide an ordered dithering matrix. This only takes one argument, but there a few types available:
 
-- A preprogrammed matrix name\
-- Inline JSON of a custom matrix\
+- A preprogrammed matrix name
+- Inline JSON of a custom matrix
 - Or a path to JSON for your custom matrix. \'**-**' means standard input.
    
 Here are all the built-in ordered dithering matrices. You can find details on these matrices here: <https://github.com/makeworld-the-better-one/dither/blob/v2.0.0/ordered_ditherers.go>
    
-- ClusteredDot4x4\
-- ClusteredDotDiagonal8x8\
-- Vertical5x3\
-- Horizontal3x5\
-- ClusteredDotDiagonal6x6\
-- ClusteredDotDiagonal8x8_2\
-- ClusteredDotDiagonal16x16\
-- ClusteredDot6x6\
-- ClusteredDotSpiral5x5\
-- ClusteredDotHorizontalLine\
-- ClusteredDotVerticalLine\
-- ClusteredDot8x8\
-- ClusteredDot6x6_2\
-- ClusteredDot6x6_3\
+- ClusteredDot4x4
+- ClusteredDotDiagonal8x8
+- Vertical5x3
+- Horizontal3x5
+- ClusteredDotDiagonal6x6
+- ClusteredDotDiagonal8x8_2
+- ClusteredDotDiagonal16x16
+- ClusteredDot6x6
+- ClusteredDotSpiral5x5
+- ClusteredDotHorizontalLine
+- ClusteredDotVerticalLine
+- ClusteredDot8x8
+- ClusteredDot6x6_2
+- ClusteredDot6x6_3
 - ClusteredDotDiagonal8x8_3
    
 Their names are case-insensitive, and hyphens and underscores are treated the same.
@@ -192,22 +192,22 @@ The JSON format (whether inline or in a file) looks like the below. The matrix m
 
 Select or provide an error diffusion matrix. This only takes one argument, but there a few types available:
 
-- A preprogrammed matrix name\
-- Inline JSON of a custom matrix\
+- A preprogrammed matrix name
+- Inline JSON of a custom matrix
 - Or a path to JSON for your custom matrix. \'**-**' means stdin.
    
 Here are all the built-in error diffusion matrices. You can find details on these matrices here: <https://github.com/makeworld-the-better-one/dither/blob/v2.0.0/error_diffusers.go>
    
-- Simple2D\
-- FloydSteinberg\
-- FalseFloydSteinberg\
-- JarvisJudiceNinke\
-- Atkinson\
-- Stucki\
-- Burkes\
-- Sierra (or Sierra3)\
-- TwoRowSierra (or Sierra2)\
-- SierraLite (or Sierra2_4A)\
+- Simple2D
+- FloydSteinberg
+- FalseFloydSteinberg
+- JarvisJudiceNinke
+- Atkinson
+- Stucki
+- Burkes
+- Sierra (or Sierra3)
+- TwoRowSierra (or Sierra2)
+- SierraLite (or Sierra2_4A)
 - StevenPigeon
    
 Their names are case-insensitive, and hyphens and underscores are treated the same.
