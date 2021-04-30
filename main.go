@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/urfave/cli/v2"
 )
@@ -193,13 +192,4 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-}
-
-// helpList creates an indented list for the CLI help/usage info.
-func helpList(level int, items ...string) string {
-	ret := ""
-	for _, item := range items {
-		ret += strings.Repeat("  ", level) + "- " + item + "\n"
-	}
-	return ret
 }
