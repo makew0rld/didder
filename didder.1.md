@@ -88,7 +88,7 @@ Homepage: <https://github.com/makeworld-the-better-one/didder>
 :   Set frames per second for animated GIF output. Note that not all FPS values can be represented by the GIF format, and so the closest possible one will be chosen. This flag has no default, and is required when animated GIFs are being outputted. This flag is ignored for non animated GIF output.
 
 **-l**, **\--loop** *NUM*
-:   Set the number of times animated GIF output should loop. 0 is the default, and will loop infinately.
+:   Set the number of times animated GIF output should loop. 0 is the default, and will loop infinitely.
 
 **-x**, **\--width** *NUM*
 :   Set the width the input image(s) will be resized to, before dithering. Aspect ratio will be maintained if **\--height** is not specified as well.
