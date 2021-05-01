@@ -5,10 +5,14 @@ on:
     paths-ignore:
       - "**.md"
       - "LICENSE"
+      - "didder.1"
+      - "didder.1.md"
   pull_request:
     paths-ignore:
       - "**.md"
       - "LICENSE"
+      - "didder.1"
+      - "didder.1.md"
 
 jobs:
   test:
