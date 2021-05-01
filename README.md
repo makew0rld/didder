@@ -72,7 +72,7 @@ git clone https://github.com/makeworld-the-better-one/didder
 cd didder
 # git checkout v1.2.3 # Optionally pin to a specific version instead of the latest commit
 make # Might be gmake on macOS
-sudo make install # If you want to install the binary for all users
+sudo make install # Install binary and man page
 ```
 
 ## Getting started
