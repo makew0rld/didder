@@ -43,7 +43,7 @@ install: didder
 	$(INSTALL) -d $(PREFIX)/bin/
 	$(INSTALL) -m 755 didder $(PREFIX)/bin/didder
 	$(GZIP) -c didder.1 > /usr/share/man/man1/didder.1.gz
-	mandb
+	$(MANDB)
 
 .PHONY: uninstall
 uninstall:

@@ -17,6 +17,8 @@ Dither images with a variety of algorithms and processing options.
 
 Mandatory global flags are **\--palette**, **\--in**, and **\--out**, all others are optional. Each command represents a dithering algorithm or set of algorithms to apply to the input image(s).
 
+The most important section in this manual is the **TIPS** one. Make sure you check it out.
+
 Homepage: <https://github.com/makeworld-the-better-one/didder>
 
 # GLOBAL OPTIONS
@@ -197,7 +199,7 @@ Read about **\--strength** if you haven't already.
 
 Read about **\--recolor** if you haven't already.
 
-It's easy to mess up a dithered image by scaling it manually. It's best to scale the image to the size you want before dithering (externally, or with **\--width** and/or **\--height**), and then leave it
+It's easy to mess up a dithered image by scaling it manually. It's best to scale the image to the size you want before dithering (externally, or with **\--width** and/or **\--height**), and then leave it.
 
 If you need to scale it up afterward, use **\--upscale**, rather than another tool. This will prevent image artifacts or blurring.
 

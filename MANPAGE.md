@@ -18,6 +18,8 @@ Dither images with a variety of algorithms and processing options.
 
 Mandatory global flags are **\--palette**, **\--in**, and **\--out**, all others are optional. Each command represents a dithering algorithm or set of algorithms to apply to the input image(s).
 
+The most important section in this manual is the **TIPS** one. Make sure you check it out.
+
 Homepage: <https://github.com/makeworld-the-better-one/didder>
 
 # GLOBAL OPTIONS
