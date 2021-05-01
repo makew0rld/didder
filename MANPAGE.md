@@ -3,8 +3,8 @@
 title: DIDDER
 section: 1
 header: User Manual
-footer: didder VERSION
-date: DATE
+footer: didder 
+date: May 01, 2021
 ---
 
 # NAME
