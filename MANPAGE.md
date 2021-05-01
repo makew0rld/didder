@@ -8,7 +8,7 @@ date: DATE
 ---
 
 # NAME
-didder - dither images
+didder — dither images
 
 # SYNOPSIS
 **didder** \[global options] command [command options] [arguments...]
@@ -16,9 +16,9 @@ didder - dither images
 # DESCRIPTION
 Dither images with a variety of algorithms and processing options.
 
-Mandatory global flags are **\--palette**, **\--in**, and **\--out**, all others are optional. Each command represents a dithering algorithm or set of algorithms to apply to the input image(s).
+Mandatory global flags are **\--palette**, **\--in**, and **\--out**, all others are optional. Each command applies a dithering algorithm or set of algorithms to the input image(s).
 
-The most important section in this manual is the **TIPS** one. Make sure you check it out.
+The most important parts of this manual are highlighted in the **TIPS** section, make sure you check it out!
 
 Homepage: <https://github.com/makeworld-the-better-one/didder>
 
@@ -105,7 +105,7 @@ Set frames per second for animated GIF output. Note that not all FPS values can 
 
 **-l**, **\--loop** *NUM*
 
-Set the number of times animated GIF output should loop. 0 is the default, and means infinite looping.
+Set the number of times animated GIF output should loop. 0 is the default, and will loop infinitely.
 
 **-x**, **\--width** *NUM*
 
@@ -228,24 +228,22 @@ Read about **\--recolor** if you haven't already.
 
 It's easy to mess up a dithered image by scaling it manually. It's best to scale the image to the size you want before dithering (externally, or with **\--width** and/or **\--height**), and then leave it.
 
-If you need to scale it up afterward, use **\--upscale**, rather than another tool. This will prevent image artifacts or blurring.
+If you need to scale it up afterward, use **\--upscale**, rather than another tool. This will prevent image artifacts and blurring.
 
-Be wary of environments where you can't make sure an image will be displayed at 100% size, pixel for pixel. Make sure nearest-neighbor scaling is being used at least.
+Be wary of environments where you can't make sure an image will be displayed at 100% size, pixel for pixel. Make sure to at least use nearest-neighbor scaling, do your best to preserve sharp pixel edges.
 
-Dithered images must only be encoded in a lossless image format. This is why the tool only outputs PNG or GIF.
+Dithered images must only be encoded in a lossless image format. This is why the tool only outputs PNG and GIF.
 
 To increase the dithering artifacts for aesthetic effect, you can downscale the image before dithering and upscale after. Like if the image is 1000 pixels tall, your command can look like **didder --height 500 --upscale 2 [...]**. Depending on the input image size and what final size you want, you can of course just upscale as well.
 
-If your palette (original or recolor) is low-spread, meaning it doesn't span much of the available shades of a single hue or the entire RGB space, you can use flags like **\--brightness**, **\--contrast**, and **\--saturation** to improve the way dithered images turn out. For example, if your palette is dark, you can turn up the brightness. 
+If your palette (original or recolor) is low-spread — meaning it doesn't span much of the available shades of a single hue or the entire RGB space — you can use flags like **\--brightness**, **\--contrast**, and **\--saturation** to improve the way dithered images turn out. For example, if your palette is dark, you can turn up the brightness.  As mentioned above, these flags apply their transformations to the original image and will not adjust your selected palette colors.
 
 # EXAMPLES
 
 **didder --palette 'black white' -i input.jpg -o test.png bayer 16x16**
 
 
-This command dithers `input.jpg` to just use black and white (implicitly converting to grayscale first), using a 16x16 Bayer matrix. The result is written to `test.png`.
-
-TODO
+This command dithers `input.jpg` using only black and white (implicitly converting to grayscale first), using a 16x16 Bayer matrix. The result is written to `test.png`.
 
 # REPORTING BUGS
 

@@ -4,7 +4,7 @@
 .hy
 .SH NAME
 .PP
-didder - dither images
+didder \[em] dither images
 .SH SYNOPSIS
 .PP
 \f[B]didder\f[R] [global options] command [command options]
@@ -15,11 +15,11 @@ Dither images with a variety of algorithms and processing options.
 .PP
 Mandatory global flags are \f[B]--palette\f[R], \f[B]--in\f[R], and
 \f[B]--out\f[R], all others are optional.
-Each command represents a dithering algorithm or set of algorithms to
-apply to the input image(s).
+Each command applies a dithering algorithm or set of algorithms to the
+input image(s).
 .PP
-The most important section in this manual is the \f[B]TIPS\f[R] one.
-Make sure you check it out.
+The most important parts of this manual are highlighted in the
+\f[B]TIPS\f[R] section, make sure you check it out!
 .PP
 Homepage: <https://github.com/makeworld-the-better-one/didder>
 .SH GLOBAL OPTIONS
@@ -197,7 +197,7 @@ This flag is ignored for non animated GIF output.
 .TP
 \f[B]-l\f[R], \f[B]--loop\f[R] \f[I]NUM\f[R]
 Set the number of times animated GIF output should loop.
-0 is the default, and means infinite looping.
+0 is the default, and will loop infinitely.
 .TP
 \f[B]-x\f[R], \f[B]--width\f[R] \f[I]NUM\f[R]
 Set the width the input image(s) will be resized to, before dithering.
@@ -468,14 +468,15 @@ then leave it.
 .PP
 If you need to scale it up afterward, use \f[B]--upscale\f[R], rather
 than another tool.
-This will prevent image artifacts or blurring.
+This will prevent image artifacts and blurring.
 .PP
 Be wary of environments where you can\[cq]t make sure an image will be
 displayed at 100% size, pixel for pixel.
-Make sure nearest-neighbor scaling is being used at least.
+Make sure to at least use nearest-neighbor scaling, do your best to
+preserve sharp pixel edges.
 .PP
 Dithered images must only be encoded in a lossless image format.
-This is why the tool only outputs PNG or GIF.
+This is why the tool only outputs PNG and GIF.
 .PP
 To increase the dithering artifacts for aesthetic effect, you can
 downscale the image before dithering and upscale after.
@@ -484,20 +485,20 @@ Like if the image is 1000 pixels tall, your command can look like
 Depending on the input image size and what final size you want, you can
 of course just upscale as well.
 .PP
-If your palette (original or recolor) is low-spread, meaning it
+If your palette (original or recolor) is low-spread \[em] meaning it
 doesn\[cq]t span much of the available shades of a single hue or the
-entire RGB space, you can use flags like \f[B]--brightness\f[R],
+entire RGB space \[em] you can use flags like \f[B]--brightness\f[R],
 \f[B]--contrast\f[R], and \f[B]--saturation\f[R] to improve the way
 dithered images turn out.
 For example, if your palette is dark, you can turn up the brightness.
+As mentioned above, these flags apply their transformations to the
+original image and will not adjust your selected palette colors.
 .SH EXAMPLES
 .TP
 \f[B]didder \[en]palette `black white' -i input.jpg -o test.png bayer 16x16\f[R]
-This command dithers \f[C]input.jpg\f[R] to just use black and white
+This command dithers \f[C]input.jpg\f[R] using only black and white
 (implicitly converting to grayscale first), using a 16x16 Bayer matrix.
 The result is written to \f[C]test.png\f[R].
-.PP
-TODO
 .SH REPORTING BUGS
 .PP
 Any bugs can be reported by creating an issue on GitHub:
