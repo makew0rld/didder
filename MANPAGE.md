@@ -226,7 +226,7 @@ Read about **\--strength** if you haven't already.
 
 Read about **\--recolor** if you haven't already.
 
-It's easy to mess up a dithered image by scaling it manually. It's best to scale the image to the size you want before dithering (externally, or with **\--width** and/or **\--height**), and then leave it
+It's easy to mess up a dithered image by scaling it manually. It's best to scale the image to the size you want before dithering (externally, or with **\--width** and/or **\--height**), and then leave it.
 
 If you need to scale it up afterward, use **\--upscale**, rather than another tool. This will prevent image artifacts or blurring.
 
