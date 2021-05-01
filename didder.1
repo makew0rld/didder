@@ -480,6 +480,13 @@ Like if the image is 1000 pixels tall, your command can look like
 \f[B]didder \[en]height 500 \[en]upscale 2 [\&...]\f[R].
 Depending on the input image size and what final size you want, you can
 of course just upscale as well.
+.PP
+If your palette (original or recolor) is low-spread, meaning it
+doesn\[cq]t span much of the available shades of a single hue or the
+entire RGB space, you can use flags like \f[B]--brightness\f[R],
+\f[B]--contrast\f[R], and \f[B]--saturation\f[R] to improve the way
+dithered images turn out.
+For example, if your palette is dark, you can turn up the brightness.
 .SH EXAMPLES
 .TP
 \f[B]didder \[en]palette `black white' -i input.jpg -o test.png bayer 16x16\f[R]

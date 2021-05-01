@@ -207,6 +207,8 @@ Dithered images must only be encoded in a lossless image format. This is why the
 
 To increase the dithering artifacts for aesthetic effect, you can downscale the image before dithering and upscale after. Like if the image is 1000 pixels tall, your command can look like **didder --height 500 --upscale 2 [...]**. Depending on the input image size and what final size you want, you can of course just upscale as well.
 
+If your palette (original or recolor) is low-spread, meaning it doesn't span much of the available shades of a single hue or the entire RGB space, you can use flags like **\--brightness**, **\--contrast**, and **\--saturation** to improve the way dithered images turn out. For example, if your palette is dark, you can turn up the brightness. 
+
 # EXAMPLES
 
 **didder --palette 'black white' -i input.jpg -o test.png bayer 16x16**
