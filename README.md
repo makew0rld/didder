@@ -59,6 +59,19 @@ On Windows you will have to open a terminal or cmd window in the same directory 
 
 Make sure to click "Watch" in the top right, then "Custom" > "Releases" to get notified about new releases!
 
+### Homebrew
+
+If you use [Homebrew](https://brew.sh/), you can install didder through the my personal tap.
+```
+brew tap makeworld-the-better-one/tap
+brew install didder
+```
+You can update it with:
+```
+brew upgrade didder
+```
+
+
 ### From source
 
 **Requirements**
@@ -73,6 +86,17 @@ cd didder
 # git checkout v1.2.3 # Optionally pin to a specific version instead of the latest commit
 make # Might be gmake on macOS
 sudo make install # Install binary and man page
+```
+
+macOS users can also use [Homebrew](https://brew.sh/) to install the latest commit of didder:
+
+```
+brew tap makeworld-the-better-one/tap
+brew install --HEAD didder
+```
+You can update it with:
+```
+brew upgrade --fetch-HEAD didder
 ```
 
 ## Getting started
