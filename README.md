@@ -35,7 +35,6 @@ More methods of dithering are being worked on, such as Riemersma, Yuliluoma, and
 
 ## Features
 - Set palette using RGB tuples, hex codes, number 0-255 (grayscale), or [SVG color names](https://www.w3.org/TR/SVG11/types.html#ColorKeywords)
-  - All colors are interpreted in the sRGB colorspace
 - Optionally recolor image with a different palette after dithering
 - Set dithering strength
 - Image is automatically converted to grayscale if palette is grayscale

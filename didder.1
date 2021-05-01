@@ -70,6 +70,9 @@ A list of all color names is available at
 Images are converted to grayscale automatically if the palette is
 grayscale.
 This produces more correct results.
+.PP
+Here\[cq]s an example of all color formats being used: \f[B]--palette
+\[aq]23,230,100 D24242 135 forestGreen\[cq]\f[R]
 .RE
 .TP
 \f[B]-r\f[R], \f[B]--recolor\f[R] \f[I]COLORS\f[R]
@@ -220,24 +223,32 @@ distort the dithering pattern and introduce artifacts.
 Get version information.
 .SH COMMANDS
 .TP
-\f[B]random\f[R]
-- grayscale and RGB random dithering
+\f[B]random\f[R] \f[I]MIN MAX\f[R] or \f[I]RED_MIN RED_MAX GREEN_MIN GREEN_MAX BLUE_MIN BLUE_MAX\f[R]
+Grayscale and RGB random dithering
 .RS
 .PP
 Accepts two arguments (min and max) for RGB or grayscale, or six
 (min/max for each channel) to control each RGB channel.
 Arguments can be separated by commas or spaces.
 .PP
--0.5,0.5 is a good default.
+Random dithering adds random noise to the image.
+The min and max numbers limit the range of the random noise.
+A good default is -0.5,0.5, which means that a middle gray pixel is 50%
+likely to become black and 50% likely to become white, assuming a black
+and white palette.
+So -0.2,2.0 will reduce the noise (20%), while -0.7,0.7 will increase it
+(70%).
+Values like -0.5,0.7 will bias the noise to one end of the channel(s).
 .TP
 \f[B]-s\f[R], \f[B]--seed\f[R] \f[I]DECIMAL\f[R]
 Set the seed for randomization.
 This will also only use one thread, to keep output deterministic.
-By default a different seed is chosen each time.
+By default a different seed is chosen each time and multiple threads are
+used.
 .RE
 .TP
-\f[B]bayer\f[R]
-- Bayer matrix ordered dithering
+\f[B]bayer\f[R] \f[I]X\f[R] \f[I]Y\f[R]
+Bayer matrix ordered dithering
 .RS
 .PP
 Requires two arguments, for the X and Y dimension of the matrix.
@@ -246,8 +257,8 @@ Both arguments must be a power of two, with the exception of: 3x5, 5x3,
 and 3x3.
 .RE
 .TP
-\f[B]odm\f[R]
-- Ordered Dither Matrix
+\f[B]odm\f[R] \f[I]NAME/JSON/FILE\f[R]
+Ordered Dithering Matrix
 .RS
 .PP
 Select or provide an ordered dithering matrix.
@@ -366,8 +377,8 @@ More information how to use a custom matrix can be found here:
 \f[R]
 .fi
 .TP
-\f[B]edm\f[R]
-- Error Diffusion Matrix
+\f[B]edm\f[R] \f[I]NAME/JSON/FILE\f[R]
+Error Diffusion Matrix
 .RS
 .PP
 Select or provide an error diffusion matrix.
@@ -495,10 +506,42 @@ As mentioned above, these flags apply their transformations to the
 original image and will not adjust your selected palette colors.
 .SH EXAMPLES
 .TP
-\f[B]didder \[en]palette `black white' -i input.jpg -o test.png bayer 16x16\f[R]
+\f[B]didder --palette \[aq]black white\[cq] -i input.jpg -o test.png bayer 16x16\f[R]
 This command dithers \f[C]input.jpg\f[R] using only black and white
-(implicitly converting to grayscale first), using a 16x16 Bayer matrix.
+(implicitly converting the image to grayscale first), using a 16x16
+Bayer matrix.
 The result is written to \f[C]test.png\f[R].
+.TP
+\f[B]didder --palette \[aq]black white\[cq] -i input.jpg -o test.png odm ClusteredDot4x4\f[R]
+Same command as above, but dithering with the preprogrammed ordered
+dithering matrix called ClusteredDot4x4.
+.TP
+\f[B]didder -i david.png -o david_dithered.png --palette \[aq]black white\[cq] --recolor \[aq]black F273FF\[cq] \[en]upscale 2 bayer 4x4\f[R]
+This is the command used for the README.
+It dithers using a 4x4 Bayer matrix, initially to black and white, which
+is then recolored to black and purple.
+Dithering to black and purple directly would produce much lower contrast
+results.
+The dithered image is upscaled to be two times larger, so that the Bayer
+dithering artifacts can be seen more clearly.
+.TP
+\f[B]didder -i input.png -o output.png -p \[aq]1E1E1E CDCDCD EDEDED FFFFFF\[cq] -r \[aq]11161e 116bcd 63b3ed e1efff\[cq] --strength 64% --brightness 20% bayer 32x32\f[R]
+This command uses a blue recolor palette, one that is biased to being
+darker.
+The palette can be viewed at
+<https://colorpeek.com/#11161e,116bcd,63b3ed,e1efff>.
+The dithering palette is the grayscale version of those colors, to keep
+luminance accurate.
+Strength is set to 64%, which although usually recommended for Bayer
+dithering of color images, works well here.
+Alternatively, one could try and increase \f[B]--contrast\f[R].
+Finally, the brightness is increased to compensate for the dark palette.
+.TP
+\f[B]didder -p \[aq]black white\[cq] --recolor \[aq]darkgreen white\[cq] -i frame_01.png -i frame_02.png -o output.gif --fps 1 random -0.5,0.5\f[R]
+This command takes two input images and creates an animated GIF,
+dithering and recoloring them along the way.
+The GIF moves at 1 frame per second, and by default loops infinitely.
+Random dithering is used, with recommended default of -0.5,0.5.
 .SH REPORTING BUGS
 .PP
 Any bugs can be reported by creating an issue on GitHub:
