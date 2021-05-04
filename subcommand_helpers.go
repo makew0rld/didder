@@ -271,13 +271,13 @@ func recolor(src image.Image) image.Image {
 func postProcImage(img image.Image) image.Image {
 	img = recolor(img)
 
+	if upscale == 1 {
+		return img
+	}
+
 	var palette color.Palette
 	if p, ok := img.(*image.Paletted); ok {
 		palette = p.Palette
-	}
-
-	if upscale == 1 {
-		return img
 	}
 
 	img = imaging.Resize(
