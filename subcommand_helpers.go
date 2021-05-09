@@ -257,8 +257,8 @@ func recolor(src image.Image) image.Image {
 	b := img.Bounds()
 	for y := b.Min.Y; y < b.Max.Y; y++ {
 		for x := b.Min.X; x < b.Max.X; x++ {
-			// Image pixel -> convert to RGBA -> find palette index using `m`
-			// -> find recolor palette color using index -> set color
+			// Image pixel -> convert to RGBA -> find recolor palette color using map
+			// -> set color
 			img.Set(x, y, paletteToRecolor[color.RGBAModel.Convert(img.At(x, y))])
 		}
 	}

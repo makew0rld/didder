@@ -100,6 +100,7 @@ func preProcess(c *cli.Context) error {
 			r, g, b, _ := c.RGBA()
 			if r != g || g != b {
 				grayscale = false
+				break
 			}
 		}
 	}

@@ -3,8 +3,8 @@
 title: DIDDER
 section: 1
 header: User Manual
-footer: didder 
-date: May 01, 2021
+footer: didder v1.0.0-3-g2404e20
+date: May 09, 2021
 ---
 
 # NAME
@@ -22,7 +22,7 @@ The most important parts of this manual are highlighted in the **TIPS** section,
 
 Homepage: <https://github.com/makeworld-the-better-one/didder>
 
-# GLOBAL OPTIONS
+# OPTIONS
 **-i**, **\--in** *PATH*
 
 Set the input file. This flag can be used multiple times to dither multiple images with the same palette and method. A *PATH* of \'**\-**' stands for standard input.

@@ -21,7 +21,7 @@ The most important parts of this manual are highlighted in the **TIPS** section,
 
 Homepage: <https://github.com/makeworld-the-better-one/didder>
 
-# GLOBAL OPTIONS
+# OPTIONS
 **-i**, **\--in** *PATH*
 :   Set the input file. This flag can be used multiple times to dither multiple images with the same palette and method. A *PATH* of \'**\-**' stands for standard input.
 
