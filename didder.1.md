@@ -15,6 +15,8 @@ didder — dither images
 # DESCRIPTION
 Dither images with a variety of algorithms and processing options.
 
+Images with transparency are supported, and their alpha channel is kept the way it was to begin with.
+
 Mandatory global flags are **\--palette**, **\--in**, and **\--out**, all others are optional. Each command applies a dithering algorithm or set of algorithms to the input image(s).
 
 The most important parts of this manual are highlighted in the **TIPS** section, make sure you check it out!
@@ -44,7 +46,7 @@ Homepage: <https://github.com/makeworld-the-better-one/didder>
     Here's an example of all color formats being used: **\--palette \'23,230,100 D24242 135 forestGreen'**
 
 **-r**, **\--recolor** *COLORS*
-:   Set the color palette used for replacing the dithered color palette after dithering. The argument syntax is the same as **\--palette**. 
+:   Set the color palette used for replacing the dithered color palette after dithering. The argument syntax is the same as **\--palette**, with one exception. It also supports RGB*A* tuples, so 4 values. This means you can also choose to change the opacity of a palette color after dithering. The values are not premultiplied, so set the RGB to the color you want as you'd expect.
 
     The **\--recolor** flag exists because when palettes that are severely limited in terms of RGB spread are used, accurately representing the image colors with the desired palette is impossible. Instead of accuracy of color, the new goal is accuracy of luminance, or even just accuracy of contrast. For example, the original Nintendo Game Boy used a solely green palette: <https://en.wikipedia.org/wiki/List_of_video_game_console_palettes#Game_Boy>. By setting **\--palette** to shades of gray and then **\--recolor**-ing to the desired shades of green, input images will be converted to grayscale automatically and then dithered in one dimension (gray), rather than trying to dither a color image (three dimensions, RGB) into a one dimensional green palette. This is similar to "hue shifting" or "colorizing" an image in image editing software.
 

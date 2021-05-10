@@ -88,7 +88,7 @@ func parseArgs(args []string, splitRunes string) []string {
 	return finalArgs
 }
 
-func hexToColor(hex string) (color.RGBA, error) {
+func hexToColor(hex string) (color.NRGBA, error) {
 	// Modified from https://github.com/lucasb-eyer/go-colorful/blob/v1.2.0/colors.go#L333
 
 	hex = strings.TrimPrefix(hex, "#")
@@ -97,35 +97,50 @@ func hexToColor(hex string) (color.RGBA, error) {
 	var r, g, b uint8
 	n, err := fmt.Sscanf(strings.ToLower(hex), format, &r, &g, &b)
 	if err != nil {
-		return color.RGBA{}, err
+		return color.NRGBA{}, err
 	}
 	if n != 3 {
-		return color.RGBA{}, fmt.Errorf("%s is not a hex color", hex)
+		return color.NRGBA{}, fmt.Errorf("%s is not a hex color", hex)
 	}
-	return color.RGBA{r, g, b, 255}, nil
+	return color.NRGBA{r, g, b, 255}, nil
 }
 
-func rgbToColor(s string) (color.RGBA, error) {
+func rgbToColor(s string) (color.NRGBA, error) {
 	format := "%d,%d,%d"
 	var r, g, b uint8
 	n, err := fmt.Sscanf(s, format, &r, &g, &b)
 	if err != nil {
-		return color.RGBA{}, err
+		return color.NRGBA{}, err
 	}
 	if n != 3 {
-		return color.RGBA{}, fmt.Errorf("%s is not an RGB tuple", s)
+		return color.NRGBA{}, fmt.Errorf("%s is not an RGB tuple", s)
 	}
-	return color.RGBA{r, g, b, 255}, nil
+	return color.NRGBA{r, g, b, 255}, nil
+}
+
+func rgbaToColor(s string) (color.NRGBA, error) {
+	format := "%d,%d,%d,%d"
+	var r, g, b, a uint8
+	n, err := fmt.Sscanf(s, format, &r, &g, &b, &a)
+	if err != nil {
+		return color.NRGBA{}, err
+	}
+	if n != 4 {
+		return color.NRGBA{}, fmt.Errorf("%s is not an RGBA tuple", s)
+	}
+	// Parse as non-premult, as that's more user-friendly
+	return color.NRGBA{r, g, b, a}, nil
 }
 
 // parseColors takes args and turns them into a color slice. All returned
-// colors are guaranteed to only be color.RGBA.
+// colors are guaranteed to only be color.NRGBA.
 func parseColors(flag string, c *cli.Context) ([]color.Color, error) {
 	args := parseArgs([]string{globalFlag(flag, c).(string)}, " ")
 	colors := make([]color.Color, len(args))
 
 	for i, arg := range args {
 		// Try to parse as RGB numbers, then hex, then grayscale, then SVG colors, then fail
+		// Optionally try for RGBA if it's recolor, see #1
 
 		if strings.Count(arg, ",") == 2 {
 			rgbColor, err := rgbToColor(arg)
@@ -133,6 +148,15 @@ func parseColors(flag string, c *cli.Context) ([]color.Color, error) {
 				return nil, fmt.Errorf("%s: %s is not a valid RGB tuple. Example: 25,200,150", flag, arg)
 			}
 			colors[i] = rgbColor
+			continue
+		}
+
+		if flag == "recolor" && strings.Count(arg, ",") == 3 {
+			rgbaColor, err := rgbaToColor(arg)
+			if err != nil {
+				return nil, fmt.Errorf("%s: %s is not a valid RGBA tuple. Example: 25,200,150,100", flag, arg)
+			}
+			colors[i] = rgbaColor
 			continue
 		}
 
@@ -147,13 +171,13 @@ func parseColors(flag string, c *cli.Context) ([]color.Color, error) {
 			if n > 255 || n < 0 {
 				return nil, fmt.Errorf("%s: single numbers like %d must be in the range 0-255", flag, n)
 			}
-			colors[i] = color.RGBA{uint8(n), uint8(n), uint8(n), 255}
+			colors[i] = color.NRGBA{uint8(n), uint8(n), uint8(n), 255}
 			continue
 		}
 
 		htmlColor, ok := colornames.Map[strings.ToLower(arg)]
 		if ok {
-			colors[i] = htmlColor
+			colors[i] = color.NRGBAModel.Convert(htmlColor).(color.NRGBA)
 			continue
 		}
 
@@ -229,10 +253,22 @@ func recolor(src image.Image) image.Image {
 	// Modified and returned value
 	var img draw.Image
 
-	// Map of original palette colors to recolor colors
-	paletteToRecolor := make(map[color.Color]color.Color)
-	for i, c := range palette {
-		paletteToRecolor[c] = recolorPalette[i]
+	// getRecolor takes an image color and returns the recolor one
+	getRecolor := func(a color.Color) color.Color {
+		// palette and recolorPalette are both NRGBA, so use that here too
+		c := color.NRGBAModel.Convert(a).(color.NRGBA)
+
+		for i := range palette {
+			pc := palette[i].(color.NRGBA)
+			if pc.R == c.R && pc.G == c.G && pc.B == c.B {
+				// Colors match. Alpha is ignored because palette colors aren't
+				// allowed alpha, so theirs will always be 255. While the image
+				// might have a different alpha at that point
+				return recolorPalette[i]
+			}
+		}
+		// This should never happen
+		return recolorPalette[0]
 	}
 
 	// Fast path for paletted images
@@ -240,7 +276,7 @@ func recolor(src image.Image) image.Image {
 		// For each color in the image palette, replace it with the equivalent
 		// recolor palette color
 		for i, c := range p.Palette {
-			p.Palette[i] = paletteToRecolor[color.RGBAModel.Convert(c)]
+			p.Palette[i] = getRecolor(c)
 		}
 		return p
 	}
@@ -259,7 +295,7 @@ func recolor(src image.Image) image.Image {
 		for x := b.Min.X; x < b.Max.X; x++ {
 			// Image pixel -> convert to RGBA -> find recolor palette color using map
 			// -> set color
-			img.Set(x, y, paletteToRecolor[color.RGBAModel.Convert(img.At(x, y))])
+			img.Set(x, y, getRecolor(img.At(x, y)))
 		}
 	}
 	return img

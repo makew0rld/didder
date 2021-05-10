@@ -26,11 +26,11 @@ const (
 
 var (
 	// palette stores the palette colors. It's set after pre-processing.
-	// Guaranteed to only hold color.RGBA.
+	// Guaranteed to only hold color.NRGBA.
 	palette []color.Color
 
 	// recolorPalette stores the recolor palette colors. It's set after pre-processing.
-	// Guaranteed to only hold color.RGBA.
+	// Guaranteed to only hold color.NRGBA.
 	recolorPalette []color.Color
 
 	grayscale bool
