@@ -225,7 +225,7 @@ If your palette (original or recolor) is low-spread — meaning it doesn't span 
 
 :   Same command as above, but dithering with the preprogrammed ordered dithering matrix called ClusteredDot4x4.
 
-**didder -i david.png -o david_dithered.png \--palette \'black white' \--recolor \'black F273FF' --upscale 2 bayer 4x4**
+**didder -i david.png -o david_dithered.png \--palette \'black white' \--recolor \'black F273FF' \--upscale 2 bayer 4x4**
 
 :   This is the command used for the README. It dithers using a 4x4 Bayer matrix, initially to black and white, which is then recolored to black and purple. Dithering to black and purple directly would produce much lower contrast results. The dithered image is upscaled to be two times larger, so that the Bayer dithering artifacts can be seen more clearly.
 

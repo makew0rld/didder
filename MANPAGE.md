@@ -3,7 +3,7 @@
 title: DIDDER
 section: 1
 header: User Manual
-footer: didder v1.0.0-4-g7593701
+footer: didder v1.0.0-5-g849df35
 date: May 09, 2021
 ---
 
@@ -254,7 +254,7 @@ This command dithers `input.jpg` using only black and white (implicitly converti
 
 Same command as above, but dithering with the preprogrammed ordered dithering matrix called ClusteredDot4x4.
 
-**didder -i david.png -o david_dithered.png \--palette \'black white' \--recolor \'black F273FF' --upscale 2 bayer 4x4**
+**didder -i david.png -o david_dithered.png \--palette \'black white' \--recolor \'black F273FF' \--upscale 2 bayer 4x4**
 
 
 This is the command used for the README. It dithers using a 4x4 Bayer matrix, initially to black and white, which is then recolored to black and purple. Dithering to black and purple directly would produce much lower contrast results. The dithered image is upscaled to be two times larger, so that the Bayer dithering artifacts can be seen more clearly.
