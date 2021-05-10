@@ -10,7 +10,7 @@ import (
 
 // Set by compiler, see Makefile
 var (
-	version = "v1.0.0"
+	version = "v1.1.0"
 	commit  = "unknown"
 	builtBy = "unknown"
 )
