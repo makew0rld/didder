@@ -3,7 +3,7 @@
 title: DIDDER
 section: 1
 header: User Manual
-footer: didder v1.0.0-5-g849df35
+footer: didder v1.1.0
 date: May 09, 2021
 ---
 
