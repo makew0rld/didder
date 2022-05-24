@@ -217,23 +217,23 @@ If your palette (original or recolor) is low-spread — meaning it doesn't span 
 
 # EXAMPLES
 
-**didder \--palette \'black white' -i input.jpg -o test.png bayer 16x16**
+**didder \--palette \"black white" -i input.jpg -o test.png bayer 16x16**
 
 :   This command dithers `input.jpg` using only black and white (implicitly converting the image to grayscale first), using a 16x16 Bayer matrix. The result is written to `test.png`.
 
-**didder \--palette \'black white' -i input.jpg -o test.png odm ClusteredDot4x4**
+**didder \--palette \"black white" -i input.jpg -o test.png odm ClusteredDot4x4**
 
 :   Same command as above, but dithering with the preprogrammed ordered dithering matrix called ClusteredDot4x4.
 
-**didder -i david.png -o david_dithered.png \--palette \'black white' \--recolor \'black F273FF' \--upscale 2 bayer 4x4**
+**didder -i david.png -o david_dithered.png \--palette \"black white" \--recolor \"black F273FF" \--upscale 2 bayer 4x4**
 
 :   This is the command used for the README. It dithers using a 4x4 Bayer matrix, initially to black and white, which is then recolored to black and purple. Dithering to black and purple directly would produce much lower contrast results. The dithered image is upscaled to be two times larger, so that the Bayer dithering artifacts can be seen more clearly.
 
-**didder -i input.png -o output.png -p \'1E1E1E CDCDCD EDEDED FFFFFF' -r \'11161e 116bcd 63b3ed e1efff' \--strength 64% \--brightness 20% bayer 32x32**
+**didder -i input.png -o output.png -p \"1E1E1E CDCDCD EDEDED FFFFFF" -r \"11161e 116bcd 63b3ed e1efff" \--strength 64% \--brightness 20% bayer 32x32**
 
 :   This command uses a blue recolor palette, one that is biased to being darker. The palette can be viewed at <https://colorpeek.com/#11161e,116bcd,63b3ed,e1efff>. The dithering palette is the grayscale version of those colors, to keep luminance accurate. Strength is set to 64%, which although usually recommended for Bayer dithering of color images, works well here. Alternatively, one could try and increase **\--contrast**. Finally, the brightness is increased to compensate for the dark palette.
 
-**didder -p \'black white' \--recolor \'darkgreen white' -i frame_01.png -i frame_02.png -o output.gif \--fps 1 random -0.5,0.5**
+**didder -p \"black white" \--recolor \"darkgreen white" -i frame_01.png -i frame_02.png -o output.gif \--fps 1 random -0.5,0.5**
 
 :   This command takes two input images and creates an animated GIF, dithering and recoloring them along the way. The GIF moves at 1 frame per second, and by default loops infinitely. Random dithering is used, with recommended default of -0.5,0.5.
 

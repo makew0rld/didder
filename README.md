@@ -111,13 +111,13 @@ You can also run `didder` to see the global options and commands. Each command r
 
 Here's a fully working command as an example:
 ```shell
-didder --palette 'black white' -i input.jpg -o test.png bayer 16x16
+didder --palette "black white" -i input.jpg -o test.png bayer 16x16
 ```
 This command dithers `input.jpg` to just use black and white (implicitly converting to grayscale first), using a 16x16 Bayer matrix. The result is written to `test.png`.
 
 As another example, here's the command used for the image at the top of the README:
 ```shell
-didder -i david.png -o david_dithered.png --palette 'black white' --recolor 'black F273FF' --upscale 2 bayer 4x4
+didder -i david.png -o david_dithered.png --palette "black white" --recolor "black F273FF" --upscale 2 bayer 4x4
 ```
 
 If you'd like the replicate this yourself, the input image is available [here](https://upload.wikimedia.org/wikipedia/commons/7/71/Michelangelo%27s_David_-_63_grijswaarden.png).
