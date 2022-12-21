@@ -3,8 +3,8 @@
 title: DIDDER
 section: 1
 header: User Manual
-footer: didder v1.1.0
-date: May 24, 2022
+footer: didder v1.2.0
+date: December 20, 2022
 ---
 
 # NAME
