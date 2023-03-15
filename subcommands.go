@@ -71,39 +71,6 @@ func preProcess(c *cli.Context) error {
 	runtime.GOMAXPROCS(int(c.Uint("threads")))
 
 	var err error
-	palette, err = parseColors("palette", c)
-	if err != nil {
-		return err
-	}
-	if len(palette) < 2 {
-		return errors.New("the palette must have at least two colors")
-	}
-
-	if c.String("recolor") != "" {
-		recolorPalette, err = parseColors("recolor", c)
-		if err != nil {
-			return err
-		}
-		if len(recolorPalette) != len(palette) {
-			return errors.New("recolor palette must have the same number of colors as the initial palette")
-		}
-	}
-
-	// Check if palette is grayscale and make image grayscale
-	// Or if the user forces it
-
-	grayscale = true
-	if !c.Bool("grayscale") {
-		// Grayscale isn't specified by the user
-		// So check to see if palette is grayscale
-		for _, c := range palette {
-			r, g, b, _ := c.RGBA()
-			if r != g || g != b {
-				grayscale = false
-				break
-			}
-		}
-	}
 
 	saturation, err = parsePercentArg(c.String("saturation"), false)
 	if err != nil {
@@ -135,6 +102,40 @@ func preProcess(c *cli.Context) error {
 			inputImages = append(inputImages, paths...)
 		} else {
 			inputImages = append(inputImages, path)
+		}
+	}
+
+	palette, err = parseColors("palette", c)
+	if err != nil {
+		return err
+	}
+	if len(palette) < 2 {
+		return errors.New("the palette must have at least two colors")
+	}
+
+	if c.String("recolor") != "" {
+		recolorPalette, err = parseColors("recolor", c)
+		if err != nil {
+			return err
+		}
+		if len(recolorPalette) != len(palette) {
+			return errors.New("recolor palette must have the same number of colors as the initial palette")
+		}
+	}
+
+	// Check if palette is grayscale and make image grayscale
+	// Or if the user forces it
+
+	grayscale = true
+	if !c.Bool("grayscale") {
+		// Grayscale isn't specified by the user
+		// So check to see if palette is grayscale
+		for _, c := range palette {
+			r, g, b, _ := c.RGBA()
+			if r != g || g != b {
+				grayscale = false
+				break
+			}
 		}
 	}
 

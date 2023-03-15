@@ -9,6 +9,7 @@ import (
 	"image/gif"
 	"image/png"
 	"io"
+	"log"
 	"math"
 	"os"
 	"path/filepath"
@@ -17,6 +18,7 @@ import (
 
 	"github.com/disintegration/imaging"
 	"github.com/makeworld-the-better-one/dither/v2"
+	"github.com/mccutchen/palettor"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/image/colornames"
 )
@@ -49,7 +51,9 @@ func parsePercentArg(arg string, maxOne bool) (float64, error) {
 
 // globalFlag returns the value of flag at the top level of the command.
 // For example, with the command:
-//     dither --threads 1 edm -s Simple2D
+//
+//	dither --threads 1 edm -s Simple2D
+//
 // "threads" is a global flag, and "s" is a flag local to the edm subcommand.
 func globalFlag(flag string, c *cli.Context) interface{} {
 	ancestor := c.Lineage()[len(c.Lineage())-1]
@@ -132,10 +136,38 @@ func rgbaToColor(s string) (color.NRGBA, error) {
 	return color.NRGBA{r, g, b, a}, nil
 }
 
+// extractInputPalette extracts a 5-color palette from the first input image
+// using palettor.
+func extractInputPalette(flag string, c *cli.Context) ([]color.Color, error) {
+	img, err := getInputImage(inputImages[0], c)
+	if err != nil {
+		return nil, fmt.Errorf("error loading image for palette extraction '%v': %w", inputImages, err)
+	}
+
+	// Resize: keep palettor.Extract fast. See the palettor CLI source:
+	// https://github.com/mccutchen/palettor/blob/3eaed180/cmd/palettor/palettor.go#L57
+	thumbnail := imaging.Resize(img, 200, 200, imaging.NearestNeighbor)
+
+	// TODO: make these settings configurable, particularly the number of colors
+	// in the palette. That means threading the argument through the CLI.
+	palette, err := palettor.Extract(5, 500, thumbnail)
+	if err != nil {
+		return nil, fmt.Errorf("error extracting image palette: %w", err)
+	}
+
+	log.Printf("Extracted palette: %v", palette.Colors())
+	return palette.Colors(), nil
+}
+
 // parseColors takes args and turns them into a color slice. All returned
 // colors are guaranteed to only be color.NRGBA.
 func parseColors(flag string, c *cli.Context) ([]color.Color, error) {
 	args := parseArgs([]string{globalFlag(flag, c).(string)}, " ")
+
+	if len(args) == 1 && args[0] == "sample" {
+		return extractInputPalette(flag, c)
+	}
+
 	colors := make([]color.Color, len(args))
 
 	for i, arg := range args {
