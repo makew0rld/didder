@@ -63,7 +63,7 @@ Make sure to click "Watch" in the top right, then "Custom" > "Releases" to get n
 
 If you use [Homebrew](https://brew.sh/), you can install didder through the my personal tap.
 ```
-brew tap makeworld-the-better-one/tap
+brew tap makew0rld/tap
 brew install didder
 ```
 You can update it with:
