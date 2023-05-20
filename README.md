@@ -91,7 +91,7 @@ sudo make install # Install binary and man page
 macOS users can also use [Homebrew](https://brew.sh/) to install the latest commit of didder:
 
 ```
-brew tap makeworld-the-better-one/tap
+brew tap makew0rld/tap
 brew install --HEAD didder
 ```
 You can update it with:
