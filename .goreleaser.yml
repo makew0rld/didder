@@ -45,10 +45,15 @@ builds:
 
 archives:
   - format: binary
-    replacements:
-      darwin: macOS
-      386: 32-bit
-      amd64: 64-bit
+    name_template: >-
+      {{- .ProjectName }}_
+      {{- .Version }}_
+      {{- if eq .Os "darwin" }}macOS
+      {{- else }}{{ .Os }}{{ end }}_
+      {{- if eq .Arch "amd64" }}64-bit
+      {{- else if eq .Arch "386" }}32-bit
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end -}}
 
 milestones:
   - close: true
