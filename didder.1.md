@@ -114,7 +114,7 @@ Homepage: <https://github.com/makeworld-the-better-one/didder>
 
     Accepts two arguments (min and max) for RGB or grayscale, or six (min/max for each channel) to control each RGB channel. Arguments can be separated by commas or spaces.
 
-    Random dithering adds random noise to the image. The min and max numbers limit the range of the random noise. A good default is -0.5,0.5, which means that a middle gray pixel is 50% likely to become black and 50% likely to become white, assuming a black and white palette. So -0.2,2.0 will reduce the noise (20%), while -0.7,0.7 will increase it (70%). Values like -0.5,0.7 will bias the noise to one end of the channel(s).
+    Random dithering adds random noise to the image. The min and max numbers limit the range of the random noise. A good default is -0.5,0.5, which means that a middle gray pixel is 50% likely to become black and 50% likely to become white, assuming a black and white palette. So -0.2,0.2 will reduce the noise (20%), while -0.7,0.7 will increase it (70%). Values like -0.5,0.7 will bias the noise to one end of the channel(s).
 
     **-s**, **\--seed** *DECIMAL*
     :   Set the seed for randomization. This will also only use one thread, to keep output deterministic. By default a different seed is chosen each time and multiple threads are used.
