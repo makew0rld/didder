@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"image/color"
 	"image/png"
-	"io/ioutil"
 	"math/rand"
 	"os"
 	"path/filepath"
@@ -392,7 +391,7 @@ func odm(c *cli.Context) error {
 		// Either inline JSON, path to file, or an error
 		err := json.Unmarshal([]byte(args[0]), &matrix)
 		if err != nil {
-			bytes, err := ioutil.ReadFile(args[0])
+			bytes, err := os.ReadFile(args[0])
 			if err != nil {
 				return errors.New("couldn't process argument as matrix name, inline JSON, or path to accessible JSON file")
 			}
@@ -461,7 +460,7 @@ func edm(c *cli.Context) error {
 		// Either inline JSON, path to file, or an error
 		err := json.Unmarshal([]byte(args[0]), &matrix)
 		if err != nil {
-			bytes, err := ioutil.ReadFile(args[0])
+			bytes, err := os.ReadFile(args[0])
 			if err != nil {
 				return errors.New("couldn't process argument as matrix name, inline JSON, or path to accessible JSON file")
 			}
