@@ -10,6 +10,7 @@
 didder is an extensive, fast, and accurate command-line image dithering tool. It is designed to work well for both power users as well as pipeline scripting.
 It is backed by my [dithering library](https://github.com/makeworld-the-better-one/dither), and is unique in its correctness and variety of dithering algorithms. No online or offline tool I know of provides as many options, while being correct (linearizing the image, weighting channels by luminance).
 
+A GUI version called [Dithertime](https://www.makeworld.space/2025/02/dithertime.html) is available on [itch.io](https://makew0rld.itch.io/dithertime).
 
 ## Types of dithering supported
 
