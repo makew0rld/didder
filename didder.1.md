@@ -19,7 +19,7 @@ Images with transparency are supported, and their alpha channel is kept the way 
 
 Mandatory global flags are **\--palette**, **\--in**, and **\--out**, all others are optional. Each command applies a dithering algorithm or set of algorithms to the input image(s).
 
-The most important parts of this manual are highlighted in the **TIPS** section, make sure you check it out!
+The most important parts of this manual are highlighted in the **TIPS** section. Make sure you check it out!
 
 Homepage: <https://github.com/makeworld-the-better-one/didder>
 
